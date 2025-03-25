@@ -1,5 +1,4 @@
 from django.db import models
-
 from vehicles.models import Vehicle
 
 class ParkingSpot(models.Model):
@@ -25,6 +24,9 @@ class ParkingSpot(models.Model):
         verbose_name = 'Vaga'
         verbose_name_plural = 'Vagas'
 
+    def __str__(self):
+        return self.spot_number
+
 
 class ParkingRecord(models.Model):
     vehicle = models.ForeignKey(
@@ -37,7 +39,7 @@ class ParkingRecord(models.Model):
         ParkingSpot,
         on_delete=models.PROTECT,
         related_name='parking_records',
-        verbose_name='Veículo',
+        verbose_name='Vaga',
     )
     entry_time = models.DateTimeField(
         auto_now_add=True, 
@@ -50,8 +52,8 @@ class ParkingRecord(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Registro de Estacionamento'
-        verbose_name_plural = 'Registros de Estacionamento'
+        verbose_name = 'Registro'
+        verbose_name_plural = 'Registros'
 
     def __str__(self):
         return f'{self.vehicle} - {self.parking_spot} - {self.entry_time}'
